@@ -26,6 +26,9 @@ Route::get('/pay/notyet', [PayController::class, 'notpay']);
 
 Route::get('/hispay', [PayController::class, 'newsTransaktion']);
 
+
+Route::get('/build', [Tagihan::class, 'daftarmateran']);
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

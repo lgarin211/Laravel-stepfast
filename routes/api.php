@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/call_tagihan', [Tagihan::class, 'call_tagihan']);
+    Route::post('/save_meteran', [Tagihan::class, 'daftarmateran']);
     Route::get('/make_tagihan/{meteran}', [Tagihan::class, 'tagihan']);
 
     Route::post('/pay', [PayController::class, 'bayar_tagihan']);

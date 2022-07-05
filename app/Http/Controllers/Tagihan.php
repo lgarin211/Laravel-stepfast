@@ -18,11 +18,33 @@ class Tagihan extends Controller
         ], 200);
     }
 
+    public function daftarmateran(Request $request)
+    {
+        $pin = Meteranlist::where('meteran_no', "2pw");
+        if ($pin->count() == 0) {
+            $pin = Meteranlist::create([
+                'meteran_no' => $request->nomor_meteran,
+                'alamat_meteran' => $request->alamat,
+                'user_id' => $request->user_id
+            ]);
+
+            return response()->json([
+                'message' => 'Meteran Berhasil Di Daftarkan',
+                'data' => $pin,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Meteran telah Di Daftarkan',
+                'data' => $pin->first(),
+            ], 200);
+        }
+    }
+
     public function call_tagihan(Request $request)
     {
-        $userid=$request->user_id;
+        $userid = $request->user_id;
         $meteranku = Meteranlist::where('user_id', $userid)->orderByDesc('id');
-        $fas=$meteranku->count();
+        $fas = $meteranku->count();
         if (empty($fas)) {
             return response()->json([
                 'message' => 'Akun Belum Memiliki Meteran, Daftarkan Meteran Anda'
@@ -36,7 +58,7 @@ class Tagihan extends Controller
         ], 200);
     }
 
-    public function tagihan(Request $request,$meteran)
+    public function tagihan(Request $request, $meteran)
     {
         // $meteran = 'a23123';
         $tagihanku = DataMeteranUser::where('nomor_meteran', $meteran)->orderByDesc('id');
